@@ -1,11 +1,7 @@
 package services.evaluators;
 
-import models.Card;
-import models.Hand;
-import models.Rank;
-import models.Suit;
+import models.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,8 +14,9 @@ public class HandEvaluatorFunctional {
     public static boolean isStraightFlush(Hand hand) {
         List<Card> cards = hand.getCards();
 
-        List<Rank> ranks = cards.stream().map(c -> c.getRank()).collect(Collectors.toList());
         boolean flush = cards.stream().allMatch(c -> c.getSuit() == cards.get(0).getSuit());
+
+        List<Rank> ranks = cards.stream().map(c -> c.getRank()).collect(Collectors.toList());
         boolean straight = ranks.stream().mapToInt(r -> r.ordinal()).max().getAsInt() -
                 ranks.stream().mapToInt(r -> r.ordinal()).min().getAsInt() == 4 && ranks.stream().distinct().count() == 5;
         return flush && straight;
@@ -109,6 +106,27 @@ public class HandEvaluatorFunctional {
 
         List<Rank> ranks = cards.stream().map(c -> c.getRank()).collect(Collectors.toList());
         return ranks.stream().distinct().count() == 4;
+    }
+
+    public static HandType determineTypeOfHand(Hand hand)
+    {
+        if (isStraightFlush(hand))
+            return HandType.STRAIGHT_FLUSH;
+        if (isFourOfAKind(hand))
+            return HandType.FOUR_OF_A_KIND;
+        if (isFullHouse(hand))
+            return HandType.FULL_HOUSE;
+        if (isFlush(hand))
+            return HandType.FLUSH;
+        if (isStraight(hand))
+            return HandType.STRAIGHT;
+        if (isThreeOfAKind(hand))
+            return HandType.THREE_OF_A_KIND;
+        if (isTwoPair(hand))
+            return HandType.TWO_PAIR;
+        if (isPair(hand))
+            return HandType.ONE_PAIR;
+        return HandType.HIGH_CARD;
     }
 
 }
