@@ -1,7 +1,9 @@
 package models;
 
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,14 +11,10 @@ import java.util.List;
  * Created by Charl on 2015-01-09.
  */
 @Entity
-public class Card implements Serializable{
+public class Card implements Serializable {
 
-    @Id
-    @Enumerated(EnumType.STRING)
-    private Suit suit;
-    @Id
-    @Enumerated(EnumType.ORDINAL)
-    private Rank rank;
+    @EmbeddedId
+    private SuitRank suitRank;
 
     @ManyToMany
     private List<Hand> hands;
@@ -25,40 +23,34 @@ public class Card implements Serializable{
     }
 
     public Card(Suit suit, Rank rank) {
-        this.suit = suit;
-        this.rank = rank;
+        suitRank = new SuitRank(suit, rank);
     }
 
     public Card(String rankAndSuit) {
-        if (rankAndSuit== null)
+        if (rankAndSuit == null)
             return;
         if (rankAndSuit.isEmpty())
             return;
-        if (rankAndSuit.length()!= 2)
+        if (rankAndSuit.length() != 2)
             return;
 
 
-        String rankStr= "" + rankAndSuit.charAt(0);
-        String suitStr= ""+ rankAndSuit.charAt(1);
+        String rankStr = "" + rankAndSuit.charAt(0);
+        String suitStr = "" + rankAndSuit.charAt(1);
 
-        rank= Rank.getRank(rankStr);
-        suit= Suit.getSuit(suitStr);
+        suitRank= new SuitRank(Suit.getSuit(suitStr),Rank.getRank(rankStr));
     }
 
     public Suit getSuit() {
-        return suit;
+        if (suitRank== null)
+            return null;
+        return suitRank.getSuit();
     }
 
     public Rank getRank() {
-        return rank;
-    }
-
-    public void setSuit(Suit suit) {
-        this.suit = suit;
-    }
-
-    public void setRank(Rank rank) {
-        this.rank = rank;
+        if (suitRank== null)
+            return null;
+        return suitRank.getRank();
     }
 
     public List<Hand> getHands() {
@@ -71,6 +63,8 @@ public class Card implements Serializable{
 
     @Override
     public String toString() {
-        return "" + rank.getShorthand() + " " + suit;
+        return "Card{" +
+                "suitRank=" + suitRank +
+                '}';
     }
 }

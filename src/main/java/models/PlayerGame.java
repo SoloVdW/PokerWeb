@@ -16,7 +16,7 @@ public class PlayerGame{
     private User player;
     @ManyToOne
     private Game game;
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL, mappedBy = "player_game")
     private Hand hand;
 
     public Long getId() {

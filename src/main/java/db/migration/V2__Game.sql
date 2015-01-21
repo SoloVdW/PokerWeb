@@ -1,12 +1,7 @@
 CREATE TABLE card (
-    suit VARCHAR(5) NOT NULL,
+    suit VARCHAR(8) NOT NULL,
     rank INTEGER NOT NULL,
     PRIMARY KEY (suit,rank)
-);
-
-CREATE TABLE hand (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (id)
 );
 
 CREATE TABLE game (
@@ -19,9 +14,25 @@ CREATE TABLE playergame (
     id BIGINT NOT NULL AUTO_INCREMENT,
     player_username VARCHAR(20),
     game_id BIGINT,
-    hand_id BIGINT,
     PRIMARY KEY (id),
     FOREIGN KEY (player_username) REFERENCES user (username),
      FOREIGN KEY (game_id) REFERENCES game (id),
-      FOREIGN KEY (hand_id) REFERENCES hand (id)
+
+);
+
+CREATE TABLE hand (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    player_game_id BIGINT,
+    PRIMARY KEY (id),
+     FOREIGN KEY (player_game_id) REFERENCES playergame (id)
+
+);
+
+CREATE TABLE card_hand (
+    hand_id BIGINT NOT NULL,
+    card_suit VARCHAR(8) NOT NULL,
+    card_rank INTEGER NOT NULL,
+    PRIMARY KEY (hand_id,card_suit,card_rank),
+    FOREIGN KEY (hand_id) REFERENCES hand (id),
+    FOREIGN KEY (card_suit, card_rank) REFERENCES card (suit,rank)
 )

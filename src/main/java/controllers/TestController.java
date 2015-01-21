@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 import models.*;
 import ninja.Result;
 import ninja.Results;
-import repositories.BaseJPARepository;
 import repositories.GameRepositoryJPA;
 import services.AuthenticationService;
 
@@ -47,6 +46,8 @@ public class TestController {
         for (int i = 0; i < 6; i++) {
             PlayerGame playerGame = new PlayerGame();
             playerGame.setHand(hands.get(i));
+
+            System.out.println("Player " + i + " : " +hands.get(i).toString());
             playerGame.setPlayer(users.get(i));
 
             playerGames.add(playerGame);

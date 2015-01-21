@@ -1,29 +1,32 @@
 package models;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * Created by Charl on 2015-01-20.
  */
-@Entity
+@MappedSuperclass
 public class BaseEntityLongId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;
+    protected Long id;
 
     public BaseEntityLongId() {
     }
 
     public BaseEntityLongId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 }

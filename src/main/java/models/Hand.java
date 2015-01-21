@@ -16,7 +16,7 @@ public class Hand{
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "hands")
     private List<Card> cards;
-    @OneToOne(mappedBy = "hand")
+    @OneToOne
     private PlayerGame player_game;
 
     public Hand() {
