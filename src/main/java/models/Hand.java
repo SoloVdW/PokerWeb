@@ -14,9 +14,16 @@ public class Hand{
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long Id;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "hands")
+    @Enumerated(EnumType.STRING)
+    private HandType handType;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name="card_hand",
+            joinColumns={@JoinColumn(name="hand_id")},
+            inverseJoinColumns={@JoinColumn(name="card_suit", referencedColumnName="suit"),
+                    @JoinColumn(name="card_rank", referencedColumnName="rank")})
     private List<Card> cards;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private PlayerGame player_game;
 
     public Hand() {
@@ -43,6 +50,14 @@ public class Hand{
         Id = id;
     }
 
+    public HandType getHandType() {
+        return handType;
+    }
+
+    public void setHandType(HandType handType) {
+        this.handType = handType;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
@@ -61,6 +76,9 @@ public class Hand{
 
     @Override
     public String toString() {
-        return "" + cards;
+        return "Hand{" +
+                "cards=" + cards +
+                ", Id=" + Id +
+                '}';
     }
 }

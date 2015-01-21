@@ -17,11 +17,11 @@ CREATE TABLE playergame (
     PRIMARY KEY (id),
     FOREIGN KEY (player_username) REFERENCES user (username),
      FOREIGN KEY (game_id) REFERENCES game (id),
-
 );
 
 CREATE TABLE hand (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    handtype VARCHAR(20),
     player_game_id BIGINT,
     PRIMARY KEY (id),
      FOREIGN KEY (player_game_id) REFERENCES playergame (id)

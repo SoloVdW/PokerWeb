@@ -45,5 +45,12 @@ public class Game{
         this.dateTime = dateTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "Game{" +
+                "Id=" + Id +
+                ", player_games=" + player_games +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 }

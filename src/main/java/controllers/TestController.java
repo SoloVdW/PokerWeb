@@ -26,13 +26,22 @@ public class TestController {
     GameRepositoryJPA gameRepositoryJPA;
 
     public Result test() {
+
+        saveGame();
+        SimplePOJO simplePOJO= new SimplePOJO();
+        simplePOJO.executed =true;
+        return Results.json().render(simplePOJO);
+    }
+
+    private void saveGame()
+    {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             String username = "a" + i;
             String password = "b" + i;
 
             Optional<User> user = authenticationService.register(username, password);
-            if (user.isPresent())
+
                 users.add(user.get());
         }
 
@@ -46,8 +55,6 @@ public class TestController {
         for (int i = 0; i < 6; i++) {
             PlayerGame playerGame = new PlayerGame();
             playerGame.setHand(hands.get(i));
-
-            System.out.println("Player " + i + " : " +hands.get(i).toString());
             playerGame.setPlayer(users.get(i));
 
             playerGames.add(playerGame);
@@ -55,12 +62,9 @@ public class TestController {
 
         game.setPlayer_games(playerGames);
 
-        gameRepositoryJPA.persist(game);
+        gameRepositoryJPA.saveGame(game);
 
-        SimplePOJO simplePOJO= new SimplePOJO();
-        simplePOJO.executed =true;
 
-        return Results.json().render(simplePOJO);
     }
 
     private class SimplePOJO{
