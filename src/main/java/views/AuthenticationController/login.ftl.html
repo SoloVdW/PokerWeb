@@ -1,0 +1,48 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Login Page">
+
+
+
+<div class="container">
+
+    <div id="login-form">
+
+        <h3>Login</h3>
+
+        <fieldset>
+
+            <form action="/login" method="post">
+
+                <input id="username" name="username" type="username" required value="username"
+                       onBlur="if(this.value=='')this.value='Username'"
+                       onFocus="if(this.value=='username')this.value='' ">
+                <!-- JS because of IE support; better: placeholder="Email" -->
+
+                <input id="password" name="password" type="password" required value="password"
+                       onBlur="if(this.value=='')this.value='Password'"
+                       onFocus="if(this.value=='password')this.value='' ">
+                <!-- JS because of IE support; better: placeholder="Password" -->
+
+                <p>
+                    <#if flash.error??>
+                        <p class="error">${flash.error}</p>
+                    </#if>
+                </p>
+
+                <input type="submit" value="Login" class="btn btn-primary">
+
+                <footer class="clearfix">
+
+                    <p><span class="info">?</span><a href="/register">Register</a></p>
+
+                </footer>
+
+            </form>
+
+        </fieldset>
+
+    </div>
+    <!-- end login-form -->
+
+</div>
+</@layout.myLayout>
