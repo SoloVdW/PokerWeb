@@ -17,23 +17,20 @@
 package controllers;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import filters.SecureFilter;
 import models.Card;
 import models.Hand;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
-
-import com.google.inject.Singleton;
 import services.IPokerService;
-import services.PokerService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
 @FilterWith(SecureFilter.class)
-public class ApplicationController {
+public class GameController {
 
     @Inject
     private IPokerService pokerService;

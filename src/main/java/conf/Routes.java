@@ -18,12 +18,12 @@ package conf;
 
 
 import controllers.AuthenticationController;
+import controllers.GameController;
 import controllers.TestController;
 import controllers.UserController;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
-import controllers.ApplicationController;
 
 public class Routes implements ApplicationRoutes {
 
@@ -48,8 +48,8 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////
         // Index / Catchall shows index page
         ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/deal").with(ApplicationController.class, "index");
-        router.GET().route("/").with(ApplicationController.class, "index");
+        router.GET().route("/deal").with(GameController.class, "index");
+        router.GET().route("/").with(GameController.class, "index");
     }
 
 }

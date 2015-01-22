@@ -40,7 +40,7 @@ public class AuthenticationController {
 
                     //generatedReverseRoute = context.getRequestPath();
 
-                    generatedReverseRoute = router.getReverseRoute(ApplicationController.class, "index");
+                    generatedReverseRoute = router.getReverseRoute(GameController.class, "index");
                 } else {
                     flashScope.error("Login Failed");
                 }
@@ -70,7 +70,7 @@ public class AuthenticationController {
                 if (user.isPresent()) {
                     context.getSession().put(SecureFilter.USERNAME, username);
 
-                    generatedReverseRoute = router.getReverseRoute(ApplicationController.class, "index");
+                    generatedReverseRoute = router.getReverseRoute(GameController.class, "index");
                 } else {
                     flashScope.error("Registration Failed");
                 }
