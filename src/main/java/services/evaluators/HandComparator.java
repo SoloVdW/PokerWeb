@@ -61,9 +61,4 @@ public class HandComparator implements Comparator<Hand> {
         return 0;
 
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
 }

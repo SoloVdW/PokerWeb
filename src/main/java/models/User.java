@@ -1,10 +1,8 @@
 package models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +19,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player", fetch = FetchType.EAGER)
     private List<PlayerGame> player_games;
 
     public User() {
@@ -61,5 +59,15 @@ public class User {
 
     public void setPlayer_games(List<PlayerGame> player_games) {
         this.player_games = player_games;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", salt=" + Arrays.toString(salt) +
+                ", password='" + password + '\'' +
+                ", player_games=" + player_games +
+                '}';
     }
 }

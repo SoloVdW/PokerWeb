@@ -1,6 +1,5 @@
 package repositories;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.User;
 
@@ -20,7 +19,7 @@ public class UserRepositoryInMemory implements UserRepository {
         return Optional.ofNullable(usersMap.get(username));
     }
 
-    public void persistUser(User user)
+    public void persist(User user)
     {
         usersMap.put(user.getUsername(), user);
     }

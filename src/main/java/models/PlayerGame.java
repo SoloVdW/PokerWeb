@@ -6,11 +6,14 @@ import javax.persistence.*;
  * Created by Charl on 2015-01-20.
  */
 @Entity
-public class PlayerGame{
+public class PlayerGame implements Cloneable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;
+    protected Long id;
+
+    @Enumerated(EnumType.STRING)
+    private ResultType result =ResultType.LOSE;
 
     @ManyToOne
     private User player;
@@ -20,11 +23,19 @@ public class PlayerGame{
     private Hand hand;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
+    }
+
+    public ResultType getResult() {
+        return result;
+    }
+
+    public void setResult(ResultType result) {
+        this.result = result;
     }
 
     public User getPlayer() {
@@ -49,5 +60,16 @@ public class PlayerGame{
 
     public void setHand(Hand hand) {
         this.hand = hand;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerGame{" +
+                "id=" + id +
+                ", result=" + result +
+                ", player=" + player +
+                ", game=" + game +
+                ", hand=" + hand +
+                '}';
     }
 }

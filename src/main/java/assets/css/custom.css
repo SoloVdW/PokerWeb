@@ -21,6 +21,16 @@ h3 {
   margin: 0;
 }
 
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 3px;
+}
+
 a {
   color: #999;
   text-decoration: none;
@@ -135,3 +145,4 @@ input[type="submit"] {
   text-align: center;
   width: 20px;
 }
+

@@ -19,39 +19,56 @@ package controllers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import filters.SecureFilter;
-import models.Card;
-import models.Hand;
+import models.Game;
+import models.PlayerGame;
+import ninja.Context;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
+import repositories.GameRepositoryJPA;
 import services.IPokerService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 @FilterWith(SecureFilter.class)
 public class GameController {
-
     @Inject
     private IPokerService pokerService;
 
-    public Result index() {
+    @Inject
+    private GameRepositoryJPA gameRepositoryJPA;
+
+    public Result index(Context context) {
         Result result = Results.html();
 
-        Hand hand= pokerService.dealHand();
-        List<Card> cards= hand.getCards();
+        Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
+        if (optionalGame.isPresent()) {
+            Game game= optionalGame.get();
+            List<PlayerGame> playerGames = game.getPlayer_games();
 
-        result.render("hand", hand.toString())
-                .render("one", cards.get(0).getRank() +"_" + cards.get(0).getSuit() + ".png")
-                .render("two", cards.get(1).getRank() +"_" + cards.get(1).getSuit() + ".png")
-                .render("three", cards.get(2).getRank() +"_" + cards.get(2).getSuit() + ".png")
-                .render("four", cards.get(3).getRank() +"_" + cards.get(3).getSuit() + ".png")
-                .render("five", cards.get(4).getRank() +"_" + cards.get(4).getSuit() + ".png").render("handType", pokerService.evaluateHand(hand).toString());
+            result.render("playerGames",playerGames);
+
+            gameRepositoryJPA.persist(game);
+        }
+
         return result;
+    }
 
+    public Result history(Context context) {
+        Result result = Results.html();
+
+        Optional<List<PlayerGame>> optionalPlayerGames = gameRepositoryJPA.findPlayerGamesByUsername(context.getSession().get(SecureFilter.USERNAME));
+        if (optionalPlayerGames.isPresent())
+            result.render("playerGames", optionalPlayerGames.get());
+
+        return result;
     }
 
     public void setPokerService(IPokerService pokerService) {
         this.pokerService = pokerService;
     }
+
+
 }

@@ -6,6 +6,7 @@ import models.*;
 import ninja.Result;
 import ninja.Results;
 import repositories.GameRepositoryJPA;
+import repositories.UserRepositoryJPA;
 import services.AuthenticationService;
 
 import java.util.ArrayList;
@@ -25,22 +26,24 @@ public class TestController {
     @Inject
     GameRepositoryJPA gameRepositoryJPA;
 
+    @Inject
+    UserRepositoryJPA userRepositoryJPA;
+
     public Result test() {
 
         saveGame();
-        SimplePOJO simplePOJO= new SimplePOJO();
-        simplePOJO.executed =true;
+        SimplePOJO simplePOJO = new SimplePOJO();
+        simplePOJO.executed = true;
         return Results.json().render(simplePOJO);
     }
 
-    private void saveGame()
-    {
+    private void saveGame() {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            String username = "a" + i;
+            String username = "computer" + i;
 
-            Optional<User> user = authenticationService.register(username, username);
-
+            Optional<User> user = userRepositoryJPA.findUserByUsername(username);
+            if (user.isPresent())
                 users.add(user.get());
         }
 
@@ -61,12 +64,12 @@ public class TestController {
 
         game.setPlayer_games(playerGames);
 
-        gameRepositoryJPA.saveGame(game);
+        gameRepositoryJPA.persist(game);
 
 
     }
 
-    private class SimplePOJO{
+    private class SimplePOJO {
         private boolean executed;
 
         public boolean isExecuted() {

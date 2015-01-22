@@ -15,7 +15,7 @@ public class Game{
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long Id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.EAGER)
     private List<PlayerGame> player_games;
 
     @Temporal(TemporalType.DATE)
@@ -48,7 +48,7 @@ public class Game{
     @Override
     public String toString() {
         return "Game{" +
-                "Id=" + Id +
+                "id=" + Id +
                 ", player_games=" + player_games +
                 ", dateTime=" + dateTime +
                 '}';

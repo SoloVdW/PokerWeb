@@ -17,7 +17,7 @@ public class Hand{
     @Enumerated(EnumType.STRING)
     private HandType handType;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name="card_hand",
             joinColumns={@JoinColumn(name="hand_id")},
             inverseJoinColumns={@JoinColumn(name="card_suit", referencedColumnName="suit"),
@@ -78,7 +78,7 @@ public class Hand{
     public String toString() {
         return "Hand{" +
                 "cards=" + cards +
-                ", Id=" + Id +
+                ", id=" + Id +
                 '}';
     }
 }

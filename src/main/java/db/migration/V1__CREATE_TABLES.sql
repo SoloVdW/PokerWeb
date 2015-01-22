@@ -20,6 +20,7 @@ CREATE TABLE game (
 
 CREATE TABLE playergame (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    result VARCHAR(5),
     player_username VARCHAR(20),
     game_id BIGINT,
     PRIMARY KEY (id),

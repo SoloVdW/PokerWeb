@@ -40,6 +40,25 @@ public class SuitRank implements Serializable{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SuitRank)) return false;
+
+        SuitRank suitRank = (SuitRank) o;
+
+        if (rank != suitRank.rank) return false;
+        if (suit != suitRank.suit) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = suit.hashCode();
+        result = 31 * result + rank.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "("+suit + ", " + rank.getShorthand() + ')';
     }

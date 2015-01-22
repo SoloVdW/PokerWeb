@@ -54,7 +54,7 @@ public class AuthenticationService {
         user.setSalt(salt);
         user.setPassword(hashedPW);
 
-        userRepository.persistUser(user);
+        userRepository.persist(user);
 
         return Optional.ofNullable(user);
     }

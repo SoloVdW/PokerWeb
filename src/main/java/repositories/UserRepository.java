@@ -11,5 +11,5 @@ public interface UserRepository {
 
     public Optional<User> findUserByUsername(String username);
 
-    public void persistUser(User user);
+    public void persist(User user);
 }

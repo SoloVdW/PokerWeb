@@ -18,7 +18,8 @@ public class PlayerGameRepositoryJPA extends BaseJPARepository<PlayerGame> {
     HandRepositoryJPA handRepositoryJPA;
 
     @Transactional
-    public void persistPlayerGame(PlayerGame playerGame) {
+    @Override
+    public void persist(PlayerGame playerGame) {
         Hand hand = playerGame.getHand();
         EntityManager em= getEntityManager();
 

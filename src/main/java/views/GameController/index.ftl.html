@@ -1,12 +1,17 @@
 <#import "../layout/defaultLayout.ftl.html" as layout>
     <@layout.myLayout "Home page">
 
-    <img src="/assets/images/cards/${one}" style="width:200px;height:290px">
-    <img src="/assets/images/cards/${two}" style="width:200px;height:290px">
-    <img src="/assets/images/cards/${three}" style="width:200px;height:290px">
-    <img src="/assets/images/cards/${four}" style="width:200px;height:290px">
-    <img src="/assets/images/cards/${five}" style="width:200px;height:290px">
 
-    <h1>${handType}</h1>
+    <#list playerGames as playerGame>
+        <p>${playerGame.player.username}</p>
+        <#list playerGame.hand.cards as card>
+            <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:100px;height:145px">
+        </#list>
+        <br>
+        <h3>${playerGame.hand.handType} = ${playerGame.result}</h4></h3>
+        <hr>
+        <br>
+    </#list>
+
 
 </@layout.myLayout>

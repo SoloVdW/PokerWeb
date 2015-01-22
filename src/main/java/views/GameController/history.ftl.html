@@ -1,0 +1,12 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "History">
+
+    <div class="form-group">
+        <label for="sel1">Game list:</label>
+        <select class="form-control" id="sel1">
+            <#list playerGames as playergame>
+                <option id=${playergame.game.id}> ${playergame.game.id} -${playergame.game.dateTime}</option>
+            </#list>
+        </select>
+    </div>
+</@layout.myLayout>
