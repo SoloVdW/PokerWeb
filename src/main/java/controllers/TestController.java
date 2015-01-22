@@ -38,9 +38,8 @@ public class TestController {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             String username = "a" + i;
-            String password = "b" + i;
 
-            Optional<User> user = authenticationService.register(username, password);
+            Optional<User> user = authenticationService.register(username, username);
 
                 users.add(user.get());
         }

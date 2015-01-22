@@ -1,3 +1,11 @@
+-- User Table
+CREATE TABLE user (
+    username VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    salt BINARY(32) NOT NULL,
+    PRIMARY KEY (username)
+);
+
 CREATE TABLE card (
     suit VARCHAR(8) NOT NULL,
     rank INTEGER NOT NULL,
@@ -35,4 +43,4 @@ CREATE TABLE card_hand (
     PRIMARY KEY (hand_id,card_suit,card_rank),
     FOREIGN KEY (hand_id) REFERENCES hand (id),
     FOREIGN KEY (card_suit, card_rank) REFERENCES card (suit,rank)
-)
+);
