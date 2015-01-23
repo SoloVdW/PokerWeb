@@ -11,11 +11,11 @@ import java.util.List;
  */
 
 @Entity
-public class Game{
+public class Game extends BaseEntityLongId{
 
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;
+    protected Long Id*/;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
     @JsonIgnore
@@ -24,13 +24,13 @@ public class Game{
     @Temporal(TemporalType.DATE)
     private Date dateTime;
 
-    public Long getId() {
+    /*public Long getId() {
         return Id;
     }
 
     public void setId(Long id) {
         Id = id;
-    }
+    }*/
 
     public List<PlayerGame> getPlayerGames() {
         return playerGames;
@@ -51,7 +51,7 @@ public class Game{
     @Override
     public String toString() {
         return "Game{" +
-                "id=" + Id +
+                "id=" + id +
                 ", playerGames=" + playerGames +
                 ", dateTime=" + dateTime +
                 '}';

@@ -10,11 +10,11 @@ import java.util.List;
  * Created by Charl on 2015-01-09.
  */
 @Entity
-public class Hand{
+public class Hand extends BaseEntityLongId{
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;
+    protected Long Id;*/
 
     @Enumerated(EnumType.STRING)
     private HandType handType;
@@ -45,13 +45,13 @@ public class Hand{
     }
 
 
-    public Long getId() {
+   /* public Long getId() {
         return Id;
     }
 
     public void setId(Long id) {
         Id = id;
-    }
+    }*/
 
     public HandType getHandType() {
         return handType;
@@ -81,7 +81,7 @@ public class Hand{
     public String toString() {
         return "Hand{" +
                 "cards=" + cards +
-                ", id=" + Id +
+                ", id=" + id +
                 '}';
     }
 }

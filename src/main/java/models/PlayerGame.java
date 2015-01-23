@@ -6,11 +6,11 @@ import javax.persistence.*;
  * Created by Charl on 2015-01-20.
  */
 @Entity
-public class PlayerGame implements Cloneable{
+public class PlayerGame extends BaseEntityLongId{
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    protected Long id;*/
 
     @Enumerated(EnumType.STRING)
     private ResultType result =ResultType.LOOSE;
@@ -22,13 +22,13 @@ public class PlayerGame implements Cloneable{
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "playerGame")
     private Hand hand;
 
-    public Long getId() {
+   /* public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
+    }*/
 
     public ResultType getResult() {
         return result;
