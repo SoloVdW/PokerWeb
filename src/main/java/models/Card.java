@@ -1,6 +1,8 @@
 package models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -17,6 +19,7 @@ public class Card implements Serializable {
     private SuitRank suitRank;
 
     @ManyToMany
+    @JsonIgnore
     private List<Hand> hands;
 
     public Card() {

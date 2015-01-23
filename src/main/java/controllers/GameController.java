@@ -19,7 +19,6 @@ package controllers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import filters.SecureFilter;
-import models.Card;
 import models.Game;
 import models.PlayerGame;
 import ninja.Context;
@@ -58,6 +57,21 @@ public class GameController {
         return result;
     }
 
+    public Result dealHands(Context context)
+    {
+        Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
+        if (optionalGame.isPresent()) {
+            Game game = optionalGame.get();
+            List<PlayerGame> playerGames = game.getPlayer_games();
+
+            gameRepositoryJPA.persist(game);
+
+            return Results.json().render("playerGames", playerGames);
+        }
+
+        return Results.badRequest();
+    }
+
     public Result history(Context context) {
         Result result = Results.html();
 
@@ -71,15 +85,6 @@ public class GameController {
     public Result getGameHistory(@PathParam("id") Long id) {
         Optional<List<PlayerGame>> optionalPlayerGames = gameRepositoryJPA.findPlayerGamesByGameId(id);
         if (optionalPlayerGames.isPresent()) {
-            for (PlayerGame playerGame : optionalPlayerGames.get()) {
-                playerGame.setGame(null);
-                playerGame.getPlayer().setPlayer_games(null);
-
-                for (Card card : playerGame.getHand().getCards()) {
-                    card.setHands(null);
-                }
-
-            }
             return Results.json().render(optionalPlayerGames.get());
         }
 

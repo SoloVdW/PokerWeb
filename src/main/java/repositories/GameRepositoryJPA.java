@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import models.Game;
-import models.Hand;
 import models.PlayerGame;
 import ninja.jpa.UnitOfWork;
 
@@ -65,11 +64,13 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
             return Optional.empty();
 
         for (PlayerGame playerGame : playerGames) {
-            Optional<Hand> hand = handRepositoryJPA.findHandByPlayerGameId(playerGame.getId());
-            if (hand.isPresent()) {
-                hand.get().setPlayer_game(null);
-                playerGame.setHand(hand.get());
-            }
+//            playerGame.getHand().setPlayer_game(null);
+//            playerGame.setGame(null);
+            /*playerGame.getPlayer().setPlayer_games(null);
+
+            for (Card card : playerGame.getHand().getCards()) {
+                card.setHands(null);
+            }*/
         }
         return Optional.of(playerGames);
     }

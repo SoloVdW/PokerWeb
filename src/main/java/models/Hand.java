@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class Hand{
                     @JoinColumn(name="card_rank", referencedColumnName="rank")})
     private List<Card> cards;
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private PlayerGame player_game;
 
     public Hand() {

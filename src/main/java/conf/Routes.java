@@ -49,6 +49,7 @@ public class Routes implements ApplicationRoutes {
         // Index / Catchall shows index page
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/deal").with(GameController.class, "index");
+        router.POST().route("/deal").with(GameController.class, "dealHands");
         router.GET().route("/history").with(GameController.class, "history");
         router.GET().route("/history/{id}").with(GameController.class, "getGameHistory");
         router.POST().route("/history/{id}").with(GameController.class, "getGameHistory");

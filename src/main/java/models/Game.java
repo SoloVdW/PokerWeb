@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Game{
     protected Long Id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
+    @JsonIgnore
     private List<PlayerGame> player_games;
 
     @Temporal(TemporalType.DATE)
