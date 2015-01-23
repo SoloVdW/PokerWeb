@@ -44,7 +44,7 @@ public class GameController {
     public Result index(Context context) {
         Result result = Results.html();
 
-        Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
+        /*Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
         if (optionalGame.isPresent()) {
             Game game = optionalGame.get();
             List<PlayerGame> playerGames = game.getPlayerGames();
@@ -52,7 +52,7 @@ public class GameController {
             gameRepositoryJPA.persist(game);
 
             result.render("playerGames", playerGames);
-        }
+        }*/
 
         return result;
     }

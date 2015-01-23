@@ -1,7 +1,6 @@
 package filters;
 
 import com.google.inject.Inject;
-import controllers.AuthenticationController;
 import ninja.*;
 
 /**
@@ -22,8 +21,6 @@ public class SecureFilter implements Filter {
         if (context.getSession() == null || context.getSession().get(USERNAME) == null) {
             return Results.forbidden().html().template("/views/AuthenticationController/login.ftl.html");
 
-            // String generatedReverseRoute = router.getReverseRoute(AuthenticationController.class, "index");
-            //return Results.forbidden().html().redirect(generatedReverseRoute);
         } else {
             return filterChain.next(context);
         }

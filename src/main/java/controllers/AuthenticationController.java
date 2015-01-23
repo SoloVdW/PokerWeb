@@ -33,19 +33,17 @@ public class AuthenticationController {
             case "POST":
                 String username = context.getParameter("username");
                 String password = context.getParameter("password");
-                String generatedReverseRoute = "/";
-                Result result;
                 if (authenticationService.authenticateUser(username, password)) {
                     context.getSession().put(SecureFilter.USERNAME, username);
 
                     //generatedReverseRoute = context.getRequestPath();
 
-                    generatedReverseRoute = router.getReverseRoute(GameController.class, "index");
+                    return Results.html().redirect(router.getReverseRoute(GameController.class, "index"));
                 } else {
                     flashScope.error("Login Failed");
                 }
 
-                return Results.html().redirect(generatedReverseRoute);
+                return Results.html();
 
         }
 
@@ -63,19 +61,17 @@ public class AuthenticationController {
             case "POST":
                 String username = context.getParameter("username");
                 String password = context.getParameter("password");
-                String generatedReverseRoute = router.getReverseRoute(AuthenticationController.class, "register");
-                Result result;
 
-                Optional<User> user= authenticationService.register(username, password);
+                Optional<User> user = authenticationService.register(username, password);
                 if (user.isPresent()) {
                     context.getSession().put(SecureFilter.USERNAME, username);
 
-                    generatedReverseRoute = router.getReverseRoute(GameController.class, "index");
+                    return  Results.html().redirect(router.getReverseRoute(GameController.class, "index"));
                 } else {
                     flashScope.error("Registration Failed");
                 }
 
-                return Results.html().redirect(generatedReverseRoute);
+                return Results.html();
         }
 
         return Results.html();
