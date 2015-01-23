@@ -19,7 +19,7 @@ public class Game{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
     @JsonIgnore
-    private List<PlayerGame> player_games;
+    private List<PlayerGame> playerGames;
 
     @Temporal(TemporalType.DATE)
     private Date dateTime;
@@ -32,12 +32,12 @@ public class Game{
         Id = id;
     }
 
-    public List<PlayerGame> getPlayer_games() {
-        return player_games;
+    public List<PlayerGame> getPlayerGames() {
+        return playerGames;
     }
 
-    public void setPlayer_games(List<PlayerGame> player_games) {
-        this.player_games = player_games;
+    public void setPlayerGames(List<PlayerGame> playerGames) {
+        this.playerGames = playerGames;
     }
 
     public Date getDateTime() {
@@ -52,7 +52,7 @@ public class Game{
     public String toString() {
         return "Game{" +
                 "id=" + Id +
-                ", player_games=" + player_games +
+                ", playerGames=" + playerGames +
                 ", dateTime=" + dateTime +
                 '}';
     }

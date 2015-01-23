@@ -19,7 +19,7 @@ public class PlayerGame implements Cloneable{
     private User player;
     @ManyToOne
     private Game game;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "player_game")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "playerGame")
     private Hand hand;
 
     public Long getId() {

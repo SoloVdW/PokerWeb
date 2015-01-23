@@ -47,7 +47,7 @@ public class GameController {
         Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
         if (optionalGame.isPresent()) {
             Game game = optionalGame.get();
-            List<PlayerGame> playerGames = game.getPlayer_games();
+            List<PlayerGame> playerGames = game.getPlayerGames();
 
             gameRepositoryJPA.persist(game);
 
@@ -62,7 +62,7 @@ public class GameController {
         Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
         if (optionalGame.isPresent()) {
             Game game = optionalGame.get();
-            List<PlayerGame> playerGames = game.getPlayer_games();
+            List<PlayerGame> playerGames = game.getPlayerGames();
 
             gameRepositoryJPA.persist(game);
 

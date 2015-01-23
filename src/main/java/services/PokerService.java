@@ -76,7 +76,7 @@ public class PokerService implements IPokerService {
         }
 
 
-        game.setPlayer_games(playerGames);
+        game.setPlayerGames(playerGames);
 
         return Optional.of(game);
     }

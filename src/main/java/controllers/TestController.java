@@ -62,7 +62,7 @@ public class TestController {
             playerGames.add(playerGame);
         }
 
-        game.setPlayer_games(playerGames);
+        game.setPlayerGames(playerGames);
 
         gameRepositoryJPA.persist(game);
 

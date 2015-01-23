@@ -24,7 +24,7 @@ public class PlayerGameRepositoryJPA extends BaseJPARepository<PlayerGame> {
         EntityManager em= getEntityManager();
 
         playerGame.setHand(null);
-        hand.setPlayer_game(playerGame);
+        hand.setPlayerGame(playerGame);
 
         em.persist(hand);
         em.flush();

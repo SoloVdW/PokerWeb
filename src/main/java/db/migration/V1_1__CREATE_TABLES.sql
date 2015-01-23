@@ -31,9 +31,9 @@ CREATE TABLE playergame (
 CREATE TABLE hand (
     id BIGINT NOT NULL AUTO_INCREMENT,
     handtype VARCHAR(20),
-    player_game_id BIGINT,
+    playerGame_id BIGINT,
     PRIMARY KEY (id),
-     FOREIGN KEY (player_game_id) REFERENCES playergame (id)
+     FOREIGN KEY (playerGame_id) REFERENCES playergame (id)
 
 );
 

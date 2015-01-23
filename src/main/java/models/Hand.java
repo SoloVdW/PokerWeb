@@ -27,7 +27,7 @@ public class Hand{
     private List<Card> cards;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private PlayerGame player_game;
+    private PlayerGame playerGame;
 
     public Hand() {
     }
@@ -69,12 +69,12 @@ public class Hand{
         this.cards = cards;
     }
 
-    public PlayerGame getPlayer_game() {
-        return player_game;
+    public PlayerGame getPlayerGame() {
+        return playerGame;
     }
 
-    public void setPlayer_game(PlayerGame player_game) {
-        this.player_game = player_game;
+    public void setPlayerGame(PlayerGame playerGame) {
+        this.playerGame = playerGame;
     }
 
     @Override

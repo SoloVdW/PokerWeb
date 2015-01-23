@@ -27,8 +27,8 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
     @Override
     public void persist(Game game) {
         EntityManager em = getEntityManager();
-        List<PlayerGame> playerGames = game.getPlayer_games();
-        game.setPlayer_games(null);
+        List<PlayerGame> playerGames = game.getPlayerGames();
+        game.setPlayerGames(null);
 
         em.persist(game);
         em.flush();
@@ -37,7 +37,7 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
             playerGameRepositoryJPA.persist(playerGame);
 
         }
-        game.setPlayer_games(playerGames);
+        game.setPlayerGames(playerGames);
 
     }
 
@@ -64,9 +64,9 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
             return Optional.empty();
 
         for (PlayerGame playerGame : playerGames) {
-//            playerGame.getHand().setPlayer_game(null);
+//            playerGame.getHand().setPlayerGame(null);
 //            playerGame.setGame(null);
-            /*playerGame.getPlayer().setPlayer_games(null);
+            /*playerGame.getPlayer().setPlayerGames(null);
 
             for (Card card : playerGame.getHand().getCards()) {
                 card.setHands(null);
