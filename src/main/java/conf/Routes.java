@@ -17,10 +17,7 @@
 package conf;
 
 
-import controllers.AuthenticationController;
-import controllers.GameController;
-import controllers.TestController;
-import controllers.UserController;
+import controllers.*;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
@@ -49,6 +46,7 @@ public class Routes implements ApplicationRoutes {
         // Index / Catchall shows index page
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/deal").with(GameController.class, "index");
+        router.GET().route("/multiplayer").with(MultiplayerController.class,"index");
         router.POST().route("/deal").with(GameController.class, "dealHands");
         router.GET().route("/history").with(GameController.class, "history");
         router.GET().route("/history/{id}").with(GameController.class, "getGameHistory");
