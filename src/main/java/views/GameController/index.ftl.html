@@ -5,7 +5,7 @@
     <#list playerGames as playerGame>
         <p>${playerGame.player.username}</p>
         <#list playerGame.hand.cards as card>
-            <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:100px;height:145px">
+            <img class="img_card" src="/assets/images/cards/${card.rank}_${card.suit}.png">
         </#list>
         <br>
         <h3>${playerGame.hand.handType} = ${playerGame.result}</h4></h3>

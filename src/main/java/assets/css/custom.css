@@ -134,6 +134,12 @@ input[type="submit"] {
   margin-top: 16px;
 }
 
+.img_card
+{
+  width:100px;
+  height:145px
+}
+
 
 .info {
   background: #e5e5e5;

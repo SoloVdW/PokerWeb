@@ -13,7 +13,7 @@ public class PlayerGame implements Cloneable{
     protected Long id;
 
     @Enumerated(EnumType.STRING)
-    private ResultType result =ResultType.LOSE;
+    private ResultType result =ResultType.LOOSE;
 
     @ManyToOne
     private User player;

@@ -6,6 +6,6 @@ package models;
 public enum ResultType {
 
     WIN,
-    LOSE,
+    LOOSE,
     DRAW
 }

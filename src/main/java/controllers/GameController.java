@@ -19,12 +19,14 @@ package controllers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import filters.SecureFilter;
+import models.Card;
 import models.Game;
 import models.PlayerGame;
 import ninja.Context;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
+import ninja.params.PathParam;
 import repositories.GameRepositoryJPA;
 import services.IPokerService;
 
@@ -45,12 +47,12 @@ public class GameController {
 
         Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
         if (optionalGame.isPresent()) {
-            Game game= optionalGame.get();
+            Game game = optionalGame.get();
             List<PlayerGame> playerGames = game.getPlayer_games();
 
-            result.render("playerGames",playerGames);
-
             gameRepositoryJPA.persist(game);
+
+            result.render("playerGames", playerGames);
         }
 
         return result;
@@ -64,6 +66,24 @@ public class GameController {
             result.render("playerGames", optionalPlayerGames.get());
 
         return result;
+    }
+
+    public Result getGameHistory(@PathParam("id") Long id) {
+        Optional<List<PlayerGame>> optionalPlayerGames = gameRepositoryJPA.findPlayerGamesByGameId(id);
+        if (optionalPlayerGames.isPresent()) {
+            for (PlayerGame playerGame : optionalPlayerGames.get()) {
+                playerGame.setGame(null);
+                playerGame.getPlayer().setPlayer_games(null);
+
+                for (Card card : playerGame.getHand().getCards()) {
+                    card.setHands(null);
+                }
+
+            }
+            return Results.json().render(optionalPlayerGames.get());
+        }
+
+        return Results.badRequest();
     }
 
     public void setPokerService(IPokerService pokerService) {

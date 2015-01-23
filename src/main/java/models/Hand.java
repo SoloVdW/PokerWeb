@@ -17,7 +17,7 @@ public class Hand{
     @Enumerated(EnumType.STRING)
     private HandType handType;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="card_hand",
             joinColumns={@JoinColumn(name="hand_id")},
             inverseJoinColumns={@JoinColumn(name="card_suit", referencedColumnName="suit"),

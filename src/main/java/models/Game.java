@@ -15,7 +15,7 @@ public class Game{
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long Id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
     private List<PlayerGame> player_games;
 
     @Temporal(TemporalType.DATE)
