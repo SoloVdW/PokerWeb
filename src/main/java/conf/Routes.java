@@ -21,6 +21,7 @@ import controllers.*;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
+import services.AsyncController;
 
 public class Routes implements ApplicationRoutes {
 
@@ -61,6 +62,8 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/game_lobby/{id}").with(MultiplayerController.class,"gameLobby");
         router.GET().route("/game/{id}/play").with(MultiplayerController.class,"showGame");
         router.GET().route("/playGame/{id}").with(MultiplayerController.class,"playGame");
+
+        router.GET().route("/getUpdatedGame").with(AsyncController.class,"getUpdatedGame");
     }
 
 }

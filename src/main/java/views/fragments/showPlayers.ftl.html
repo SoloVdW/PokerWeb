@@ -1,0 +1,9 @@
+<div id="players">
+    <div id="playerGroup" class="list-group">
+        <#list game.playerGames as playerGame>
+        <li href="#" class="list-group-item active"> ${playerGame.player.username}</li>
+        </#list>
+    </div>
+
+    <h4 id="waiting">Waiting for players</h4>
+</div>

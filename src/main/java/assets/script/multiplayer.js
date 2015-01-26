@@ -61,6 +61,17 @@ $(document).ready(function()
         });
     };
 
+      function updateGame(id){
+                $.ajax(
+                {
+                    type: "GET",
+                    url: "/getUpdatedGame"
+                }).done(function(game)
+                {
+                    showPlayers(game);
+                });
+            };
+
     $("#start_game_div").delegate('*','click',
                     function (e){
                     var id = e.target.id;

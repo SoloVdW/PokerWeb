@@ -30,10 +30,12 @@ public class MultiplayerController {
     public Result index(Context context) {
         Result result = Results.html();
         String username = context.getSession().get(SecureFilter.USERNAME);
+
         Optional<Game> game = multiplayerService.createMultiPlayerGame(username);
         if (game.isPresent()) {
             result.render("game", game.get())
                     .render(SecureFilter.USERNAME, username);
+            context.getSession().put("gameId",game.get().getId().toString());
         }
 
         return result;
@@ -68,8 +70,10 @@ public class MultiplayerController {
 
     public Result gameLobby(@PathParam("id") long id, Context context) {
         Optional<Game> game = multiplayerService.getGame(id);
-        if (game.isPresent())
+        if (game.isPresent()) {
+            context.getSession().put("gameId",game.get().getId().toString());
             return Results.html().render(game.get());
+        }
 
         return Results.notFound();
     }
