@@ -1,0 +1,31 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Multiplayer Game">
+
+    <div>
+        <br>
+
+        <h2> Game ID: ${game.id} </h2>
+        <hr>
+    </div>
+
+    <div>
+        <#list game.playerGames as playerGame>
+            <p>${playerGame.player.username}</p>
+            <#list playerGame.hand.cards as card>
+                <img class="img_card" src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:100px; height:145px">'
+            </#list>
+
+            <br>
+            <h3>${playerGame.hand.handType}  =  ${playerGame.result}</h3>
+            <hr>
+            <br>
+        </#list>
+    </div>
+
+    <div id="start_game_div">
+        <input id=${game.id} type="button" value="Start new Game" class="btn btn-primary btn-lg">
+    </div>
+
+
+</@layout.myLayout>
+<script src="assets/script/multiplayer.js"></script>

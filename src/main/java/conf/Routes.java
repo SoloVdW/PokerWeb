@@ -45,13 +45,22 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////
         // Index / Catchall shows index page
         ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/").with(GameController.class, "index");
         router.GET().route("/deal").with(GameController.class, "index");
-        router.GET().route("/multiplayer").with(MultiplayerController.class,"index");
         router.POST().route("/deal").with(GameController.class, "dealHands");
+
         router.GET().route("/history").with(GameController.class, "history");
         router.GET().route("/history/{id}").with(GameController.class, "getGameHistory");
         router.POST().route("/history/{id}").with(GameController.class, "getGameHistory");
-        router.GET().route("/").with(GameController.class, "index");
+
+
+        router.GET().route("/multiplayer").with(MultiplayerController.class,"index");
+        router.GET().route("/host_game").with(MultiplayerController.class,"hostGame");
+        router.GET().route("/join_game").with(MultiplayerController.class,"showGames");
+        router.GET().route("/join_game/{id}").with(MultiplayerController.class,"joinGame");
+        router.GET().route("/game_lobby/{id}").with(MultiplayerController.class,"gameLobby");
+        router.GET().route("/game/{id}/play").with(MultiplayerController.class,"showGame");
+        router.GET().route("/playGame/{id}").with(MultiplayerController.class,"playGame");
     }
 
 }

@@ -18,7 +18,7 @@ $(document).ready(function()
                         $( "#history_div" ).append('<p>' + playerGame.player.username+ '</p>');
                          $.each(playerGame.hand.cards, function(k,card)
                          {
-                            $( "#history_div" ).append('<img class="img_card img-thumbnail" src="/assets/images/cards/' + card.rank + '_' + card.suit + '.png" style="width:100px;height:145px">');
+                            $( "#history_div" ).append('<img class="img_card" src="/assets/images/cards/' + card.rank + '_' + card.suit + '.png" style="width:100px;height:145px">');
                          });
                          $( "#history_div" ).append('<br>');
                          $( "#history_div" ).append('<h3>' + playerGame.hand.handType +' = '+ playerGame.result + '</h4></h3>');

@@ -15,6 +15,7 @@ CREATE TABLE card (
 CREATE TABLE game (
     id BIGINT NOT NULL AUTO_INCREMENT,
     datetime DATE,
+    status VARCHAR(10),
     PRIMARY KEY (id)
 );
 

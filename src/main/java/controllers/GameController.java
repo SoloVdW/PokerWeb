@@ -41,19 +41,9 @@ public class GameController {
     @Inject
     private GameRepositoryJPA gameRepositoryJPA;
 
+
     public Result index(Context context) {
         Result result = Results.html();
-
-        /*Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
-        if (optionalGame.isPresent()) {
-            Game game = optionalGame.get();
-            List<PlayerGame> playerGames = game.getPlayerGames();
-
-            gameRepositoryJPA.persist(game);
-
-            result.render("playerGames", playerGames);
-        }*/
-
         return result;
     }
 
@@ -62,9 +52,8 @@ public class GameController {
         Optional<Game> optionalGame = pokerService.createNewGame(context.getSession().get(SecureFilter.USERNAME));
         if (optionalGame.isPresent()) {
             Game game = optionalGame.get();
-            List<PlayerGame> playerGames = game.getPlayerGames();
 
-            gameRepositoryJPA.persist(game);
+            List<PlayerGame> playerGames = game.getPlayerGames();
 
             return Results.json().render("playerGames", playerGames);
         }

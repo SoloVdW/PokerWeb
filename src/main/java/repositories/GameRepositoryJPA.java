@@ -1,13 +1,11 @@
 package repositories;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.inject.persist.Transactional;
 import models.Game;
+import models.GameStatus;
 import models.PlayerGame;
 import ninja.jpa.UnitOfWork;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,30 +14,6 @@ import java.util.Optional;
  */
 @Singleton
 public class GameRepositoryJPA extends BaseJPARepository<Game> {
-
-    @Inject
-    PlayerGameRepositoryJPA playerGameRepositoryJPA;
-
-    @Inject
-    HandRepositoryJPA handRepositoryJPA;
-
-    @Transactional
-    @Override
-    public void persist(Game game) {
-        EntityManager em = getEntityManager();
-        List<PlayerGame> playerGames = game.getPlayerGames();
-        game.setPlayerGames(null);
-
-        em.persist(game);
-        em.flush();
-        for (PlayerGame playerGame : playerGames) {
-            playerGame.setGame(game);
-            playerGameRepositoryJPA.persist(playerGame);
-
-        }
-        game.setPlayerGames(playerGames);
-
-    }
 
     @UnitOfWork
     public Optional<List<Game>> findGamesByUsername(String username) {
@@ -62,16 +36,23 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
         List<PlayerGame> playerGames = getEntityManager().createQuery("SELECT pg FROM PlayerGame pg WHERE pg.game.id = :id").setParameter("id", id).getResultList();
         if (playerGames == null || playerGames.isEmpty())
             return Optional.empty();
-
-        for (PlayerGame playerGame : playerGames) {
-//            playerGame.getHand().setPlayerGame(null);
-//            playerGame.setGame(null);
-            /*playerGame.getPlayer().setPlayerGames(null);
-
-            for (Card card : playerGame.getHand().getCards()) {
-                card.setHands(null);
-            }*/
-        }
         return Optional.of(playerGames);
+    }
+
+    @UnitOfWork
+    public Optional<List<Game>> findOpenGames() {
+        List<Game> games = getEntityManager().createQuery("SELECT g FROM Game g WHERE g.status = :status").setParameter("status", GameStatus.WAITING).getResultList();
+        if (games == null || games.isEmpty())
+            return Optional.empty();
+        for (Game game: games)
+        {
+            game.setPlayerGames(null);
+        }
+        return Optional.of(games);
+    }
+
+    @UnitOfWork
+    public Optional<Game> findGameById(long id) {
+       return getSingleResult(getEntityManager().createQuery("SELECT g FROM Game g WHERE g.id = :id").setParameter("id", id));
     }
 }
