@@ -78,6 +78,7 @@ public class PokerService implements IPokerService {
 
         }
 
+        game.setStatus(GameStatus.COMPLETE);
         gameRepositoryJPA.persist(game);
 
         return Optional.of(game);

@@ -25,7 +25,7 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
 
     @UnitOfWork
     public Optional<List<PlayerGame>> findPlayerGamesByUsername(String username) {
-        List<PlayerGame> playerGames = getEntityManager().createQuery("SELECT pg FROM PlayerGame pg WHERE pg.player.username = :username").setParameter("username", username).getResultList();
+        List<PlayerGame> playerGames = getEntityManager().createQuery("SELECT pg FROM PlayerGame pg WHERE pg.player.username = :username AND pg.game.status = :status").setParameter("username", username).setParameter("status", GameStatus.COMPLETE).getResultList();
         if (playerGames == null || playerGames.isEmpty())
             return Optional.empty();
         return Optional.of(playerGames);

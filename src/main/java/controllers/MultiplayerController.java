@@ -41,6 +41,7 @@ public class MultiplayerController {
                     .render(SecureFilter.USERNAME, username);
             context.getSession().put("gameId",game.get().getId().toString());
             asyncController.updatedGame(game.get().getId());
+            asyncController.updatedGameList();
         }
 
         return result;
@@ -52,6 +53,7 @@ public class MultiplayerController {
             SimplePojo simplePojo = new SimplePojo();
             simplePojo.gameId = game.get().getId();
             asyncController.updatedGame(game.get().getId());
+            asyncController.updatedGameList();
             return Results.json().render(simplePojo);
         }
         return Results.notFound();

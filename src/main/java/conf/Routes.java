@@ -64,6 +64,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/playGame/{id}").with(MultiplayerController.class,"playGame");
 
         router.GET().route("/getUpdatedGame").with(AsyncController.class,"getUpdatedGame");
+        router.GET().route("/getGameList").with(AsyncController.class,"getGameList");
     }
 
 }
