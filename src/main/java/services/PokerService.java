@@ -84,6 +84,46 @@ public class PokerService implements IPokerService {
         return Optional.of(game);
     }
 
+    public Optional<Game> createNewGame(List<User> users, String username) {
+        Game game = new Game();
+
+        Calendar calendar = Calendar.getInstance();
+        game.setDateTime(calendar.getTime());
+
+        Deck deck = new Deck();
+        List<Hand> hands = deck.dealhands(users.size());
+
+        for (int i = 0; i < users.size(); i++) {
+            PlayerGame playerGame = new PlayerGame();
+            hands.get(i).setHandType(determineTypeOfHand(hands.get(i)));
+            playerGame.setHand(hands.get(i));
+            playerGame.setPlayer(users.get(i));
+
+            game.addPlayerGame(playerGame);
+        }
+
+        //Sort according to hand
+        Collections.sort(game.getPlayerGames(), new PlayerGameHandComparator());
+
+        game.getPlayerGames().get(0).setResult(ResultType.WIN);
+
+        //Place host into 0 index
+        for (int i = 1; i < game.getPlayerGames().size(); i++) {
+            User player = game.getPlayerGames().get(i).getPlayer();
+            if (player.getUsername().equals(username)) {
+                PlayerGame playerGame = game.getPlayerGames().get(i);
+                game.getPlayerGames().remove(playerGame);
+                game.getPlayerGames().add(0, playerGame);
+            }
+
+        }
+
+        game.setStatus(GameStatus.COMPLETE);
+        gameRepositoryJPA.persist(game);
+
+        return Optional.of(game);
+    }
+
 
 }
 

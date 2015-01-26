@@ -6,10 +6,7 @@ import repositories.GameRepositoryJPA;
 import repositories.UserRepositoryJPA;
 import services.evaluators.PlayerGameHandComparator;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static services.evaluators.HandEvaluatorFunctional.determineTypeOfHand;
 
@@ -22,6 +19,9 @@ public class MultiplayerService {
 
     @Inject
     private GameRepositoryJPA gameRepositoryJPA;
+
+    @Inject
+    IPokerService pokerService;
 
     public Optional<Game> createMultiPlayerGame(String username) {
         Optional<User> user = userRepositoryJPA.findUserByUsername(username);
@@ -42,6 +42,25 @@ public class MultiplayerService {
 
         return Optional.of(game);
     }
+
+    public Optional<Game> createMultiPlayerGameFromOldGame(long id, String username)
+    {
+        Optional<Game> optionalGame = gameRepositoryJPA.findGameById(id);
+        if (!optionalGame.isPresent())
+            return Optional.empty();
+
+        Game game = optionalGame.get();
+
+        List<User> users= new ArrayList<>();
+        for (PlayerGame playerGame: game.getPlayerGames())
+        {
+            users.add(playerGame.getPlayer());
+        }
+
+       return pokerService.createNewGame(users,username);
+    }
+
+
 
     public Optional<List<Game>> getOpenGames() {
         return gameRepositoryJPA.findOpenGames();

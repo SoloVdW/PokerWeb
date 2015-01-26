@@ -46,11 +46,14 @@ public class MultiplayerController {
         return result;
     }
 
-    public Result hostGame(Context context) {
-        Optional<Game> game = multiplayerService.createMultiPlayerGame(context.getSession().get(SecureFilter.USERNAME));
+    public Result hostGame(@PathParam("id") long id, Context context) {
+        Optional<Game> game = multiplayerService.createMultiPlayerGameFromOldGame(id,context.getSession().get(SecureFilter.USERNAME));
         if (game.isPresent()) {
+            context.getSession().put("gameId",game.get().getId().toString());
+
             SimplePojo simplePojo = new SimplePojo();
             simplePojo.gameId = game.get().getId();
+
             asyncController.updatedGame(game.get().getId());
             asyncController.updatedGameList();
             return Results.json().render(simplePojo);

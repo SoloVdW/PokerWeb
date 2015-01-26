@@ -3,14 +3,6 @@
 */
 $(document).ready(function()
 {
-    $("#host_game").on("click",
-        function (){
-            $('#host_game_tab').removeClass();
-            $('#join_game_tab').removeClass();
-            $('#host_game_tab').addClass('active');
-            hostGame();
-        });
-
     $("#join_game").on("click",
             function (){
                  $('#host_game_tab').removeClass();
@@ -19,15 +11,15 @@ $(document).ready(function()
                  joinGame();
             });
 
-    function hostGame(){
-        /*$.ajax(
+    function hostNewGame(id){
+        $.ajax(
         {
             type: "GET",
-            url: "/host_game"
+            url: "/host_game/" + id
         }).done(function(data)
         {
-            alert(data.gameId);
-        });*/
+            window.location.replace("/game/" + data.gameId + "/play");
+        });
     };
 
     function joinGame(){
@@ -46,7 +38,7 @@ $(document).ready(function()
                 url: "/join_game/" + id
             }).done(function(game)
             {
-                window.location.replace("game_lobby/" + game.id);
+                window.location.replace("/game_lobby/" + game.id);
 
             });
         };
@@ -83,8 +75,14 @@ $(document).ready(function()
                     url: "/playGame/" + id
                 }).done(function(data)
                 {
-                    window.location.replace("game/" + data.gameId + "/play");
+                    window.location.replace("/game/" + data.gameId + "/play");
 
                 });
             };
+
+    $("#start_new_game_div").delegate('*','click',
+                        function (e){
+                        var id = e.target.id;
+                        hostNewGame(id);
+                        });
 });
