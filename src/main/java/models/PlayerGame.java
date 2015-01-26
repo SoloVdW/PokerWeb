@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -8,27 +10,16 @@ import javax.persistence.*;
 @Entity
 public class PlayerGame extends BaseEntityLongId{
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;*/
-
     @Enumerated(EnumType.STRING)
     private ResultType result =ResultType.LOOSE;
 
     @ManyToOne
     private User player;
     @ManyToOne
+    @JsonIgnore
     private Game game;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "playerGame")
     private Hand hand;
-
-   /* public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }*/
 
     public ResultType getResult() {
         return result;
@@ -60,6 +51,7 @@ public class PlayerGame extends BaseEntityLongId{
 
     public void setHand(Hand hand) {
         this.hand = hand;
+        this.hand.setPlayerGame(this);
     }
 
     @Override

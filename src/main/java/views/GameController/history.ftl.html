@@ -5,7 +5,7 @@
         <label for="sel1">Game list:</label>
         <select class="form-control" id="sel1">
             <#list playerGames as playergame>
-                <option id=${playergame.game.id}> ${playergame.game.id} -${playergame.game.dateTime}</option>
+                <option id=${playergame.game.id}> ${playergame.game.id} -${playergame.game.dateTime}  : ${playergame.result}</option>
             </#list>
         </select>
     </div>

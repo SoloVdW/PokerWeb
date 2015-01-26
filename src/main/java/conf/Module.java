@@ -18,9 +18,12 @@ package conf;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import repositories.*;
+import repositories.GameRepositoryJPA;
+import repositories.UserRepository;
+import repositories.UserRepositoryJPA;
 import services.AuthenticationService;
 import services.IPokerService;
+import services.MultiplayerService;
 import services.PokerService;
 
 @Singleton
@@ -34,6 +37,7 @@ public class Module extends AbstractModule {
         bind(UserRepository.class).to(UserRepositoryJPA.class);
         bind(AuthenticationService.class);
         bind(GameRepositoryJPA.class);
+        bind(MultiplayerService.class);
 
     }
 

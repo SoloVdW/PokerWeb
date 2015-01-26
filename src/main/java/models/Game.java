@@ -1,8 +1,10 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,26 +13,17 @@ import java.util.List;
  */
 
 @Entity
-public class Game extends BaseEntityLongId{
+public class Game extends BaseEntityLongId {
 
-   /* @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id*/;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     private List<PlayerGame> playerGames;
 
     @Temporal(TemporalType.DATE)
     private Date dateTime;
 
-    /*public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }*/
+    @Enumerated(EnumType.STRING)
+    private GameStatus status=GameStatus.WAITING;
 
     public List<PlayerGame> getPlayerGames() {
         return playerGames;
@@ -46,6 +39,25 @@ public class Game extends BaseEntityLongId{
 
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void addPlayerGame(PlayerGame playerGame) {
+        if (playerGames == null)
+            playerGames = new ArrayList<>();
+
+        playerGame.setGame(this);
+        Hand hand = playerGame.getHand();
+        if (hand != null)
+            hand.setPlayerGame(playerGame);
+        playerGames.add(playerGame);
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
     @Override

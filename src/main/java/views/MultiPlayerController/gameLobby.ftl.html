@@ -1,0 +1,14 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Home page">
+
+    <div>
+        <br>
+        <h2> Game ID: ${game.id} </h2>
+        <hr>
+    </div>
+
+    <#include "../Fragments/showPlayers.ftl.html"/>
+
+
+</@layout.myLayout>
+<script src="assets/script/multiplayer.js"></script>

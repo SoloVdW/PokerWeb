@@ -2,7 +2,6 @@ package repositories;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
 import javax.persistence.EntityManager;
@@ -22,6 +21,11 @@ public class BaseJPARepository<T> {
     @Transactional
     public void persist(T entity) {
         getEntityManager().persist(entity);
+    }
+
+    @Transactional
+    public void merge(T entity) {
+        getEntityManager().merge(entity);
     }
 
     protected EntityManager getEntityManager() {

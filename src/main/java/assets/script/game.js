@@ -22,11 +22,11 @@ $(document).ready(function()
                                             $( "#deal_div" ).append('<img class="img_card" src="/assets/images/cards/' + card.rank + '_' + card.suit + '.png">');
                                         });
                                         $( "#deal_div" ).append('<br>');
-                                        $( "#deal_div" ).append('<h3>' + playerGame.hand.handType +' = '+ playerGame.result + '</h4></h3>');
+                                        $( "#deal_div" ).append('<h3>' + playerGame.hand.handType +' = '+ playerGame.result + '</h3>');
                                         $( "#deal_div" ).append('<hr>');
                                         $( "#deal_div" ).append('<br>');
-                                    });
-                                });
                              });
-                         });
              });
+        });
+    });
+});

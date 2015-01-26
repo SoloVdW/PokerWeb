@@ -3,6 +3,7 @@ package services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.*;
+import repositories.GameRepositoryJPA;
 import repositories.UserRepositoryJPA;
 import services.evaluators.PlayerGameHandComparator;
 
@@ -18,6 +19,9 @@ public class PokerService implements IPokerService {
 
     @Inject
     private UserRepositoryJPA userRepositoryJPA;
+
+    @Inject
+    private GameRepositoryJPA gameRepositoryJPA;
 
     public Hand dealHand() {
         Deck deck = new Deck();
@@ -44,41 +48,41 @@ public class PokerService implements IPokerService {
 
         Game game = new Game();
 
-        Calendar calendar= Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         game.setDateTime(calendar.getTime());
 
         Deck deck = new Deck();
         List<Hand> hands = deck.dealhands(users.size());
 
-        List<PlayerGame> playerGames = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             PlayerGame playerGame = new PlayerGame();
             hands.get(i).setHandType(determineTypeOfHand(hands.get(i)));
             playerGame.setHand(hands.get(i));
             playerGame.setPlayer(users.get(i));
 
-            playerGames.add(playerGame);
+            game.addPlayerGame(playerGame);
         }
 
         //Sort according to hand
-        Collections.sort(playerGames, new PlayerGameHandComparator());
+        Collections.sort(game.getPlayerGames(), new PlayerGameHandComparator());
 
-        playerGames.get(0).setResult(ResultType.WIN);
+        game.getPlayerGames().get(0).setResult(ResultType.WIN);
 
-        for (int i = 1; i < playerGames.size(); i++) {
-            User player = playerGames.get(i).getPlayer();
+        for (int i = 1; i < game.getPlayerGames().size(); i++) {
+            User player = game.getPlayerGames().get(i).getPlayer();
             if (player.getUsername().equals(username)) {
-                PlayerGame playerGame = playerGames.get(i);
-                playerGames.remove(playerGame);
-                playerGames.add(0, playerGame);
+                PlayerGame playerGame = game.getPlayerGames().get(i);
+                game.getPlayerGames().remove(playerGame);
+                game.getPlayerGames().add(0, playerGame);
             }
 
         }
 
-
-        game.setPlayerGames(playerGames);
+        gameRepositoryJPA.persist(game);
 
         return Optional.of(game);
     }
+
+
 }
 

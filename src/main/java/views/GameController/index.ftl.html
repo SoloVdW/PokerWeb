@@ -3,23 +3,13 @@
 
 
     <div>
-        <input id="deal_hands" type="button" value="Deal Hands" class="btn btn-primary">
+        <input id="deal_hands" type="button" value="Deal Hands" class="btn btn-primary btn-lg">
         <br>
         <br>
         <hr>
     </div>
     <div id="deal_div">
-        <#list playerGames as playerGame>
-            <p>${playerGame.player.username}</p>
-            <#list playerGame.hand.cards as card>
-                <img class="img_card" src="/assets/images/cards/${card.rank}_${card.suit}.png">
-            </#list>
-            <br>
 
-            <h3>${playerGame.hand.handType} = ${playerGame.result}</h4></h3>
-            <hr>
-            <br>
-        </#list>
     </div>
 
 

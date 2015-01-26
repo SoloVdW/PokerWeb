@@ -1,15 +1,34 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="/">${i18n("header.title")}</a>
-			<a class="navbar-brand" href="/history">History</a>
-			<a class="navbar-brand" href="/logout">Logout</a>
-		</div>
-		<!--/.navbar-collapse -->
-	</div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+           <!-- <a class="navbar-brand" href="/deal">Game</a>-->
+
+            <div class="btn-group">
+                <a class="navbar-brand dropdown-toggle" aria-expanded="false"
+                   href="/deal">Game</a>
+            </div>
+            <div class="btn-group">
+                <a class="navbar-brand dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                   href="#">Multiplayer</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/multiplayer">Host new Game</a></li>
+                    <li><a href="/join_game">Join Game</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <a class="navbar-brand dropdown-toggle" aria-expanded="false"
+                   href="/history">History</a>
+            </div>
+            <div class="btn-group">
+                <a class="navbar-brand dropdown-toggle" aria-expanded="false"
+                   href="/logout">Logout</a>
+            </div>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
 </div>

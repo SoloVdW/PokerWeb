@@ -1,0 +1,17 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Home page">
+
+    <div>
+        <br>
+
+        <h2> Games available : </h2>
+        <hr>
+    </div>
+
+    <div id="showOpenGames">
+        <#include "../Fragments/showOpenGames.ftl.html"/>
+    </div>
+
+
+</@layout.myLayout>
+<script src="assets/script/multiplayer.js"></script>
