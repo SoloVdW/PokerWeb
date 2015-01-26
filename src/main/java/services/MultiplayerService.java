@@ -48,15 +48,27 @@ public class MultiplayerService {
     }
 
     public Optional<Game> joinGame(long gameId, String username) {
-        Optional<User> user = userRepositoryJPA.findUserByUsername(username);
-        if (!user.isPresent())
-            return Optional.empty();
-
         Optional<Game> optionalGame = gameRepositoryJPA.findGameById(gameId);
         if (!optionalGame.isPresent())
             return Optional.empty();
 
         Game game = optionalGame.get();
+
+        boolean alreadyJoined = false;
+        for (PlayerGame playerGame : game.getPlayerGames()) {
+            if (playerGame.getPlayer().getUsername().equals(username)) {
+                alreadyJoined = true;
+                break;
+            }
+        }
+
+        if (alreadyJoined) {
+            return Optional.of(game);
+        }
+
+        Optional<User> user = userRepositoryJPA.findUserByUsername(username);
+        if (!user.isPresent())
+            return Optional.empty();
 
         PlayerGame playerGame = new PlayerGame();
         playerGame.setPlayer(user.get());

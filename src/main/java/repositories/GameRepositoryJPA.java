@@ -55,4 +55,9 @@ public class GameRepositoryJPA extends BaseJPARepository<Game> {
     public Optional<Game> findGameById(long id) {
        return getSingleResult(getEntityManager().createQuery("SELECT g FROM Game g WHERE g.id = :id").setParameter("id", id));
     }
+
+    @UnitOfWork
+    public Optional<Game> findGameIdAndUserNameBy(long id) {
+        return getSingleResult(getEntityManager().createQuery("SELECT g FROM Game g WHERE g.id = :id").setParameter("id", id));
+    }
 }

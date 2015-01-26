@@ -1,9 +1,11 @@
-package services;
+package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import filters.SecureFilter;
 import models.Game;
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import repositories.GameRepositoryJPA;
@@ -17,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Charl on 2015-01-26.
  */
 @Singleton
+@FilterWith(SecureFilter.class)
 public class AsyncController {
     @Inject
     GameRepositoryJPA gameRepositoryJPA;

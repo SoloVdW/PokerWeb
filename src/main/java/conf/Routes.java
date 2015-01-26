@@ -21,7 +21,6 @@ import controllers.*;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
-import services.AsyncController;
 
 public class Routes implements ApplicationRoutes {
 
