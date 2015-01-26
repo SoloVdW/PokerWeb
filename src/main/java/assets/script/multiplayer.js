@@ -46,8 +46,6 @@ $(document).ready(function()
                 url: "/join_game/" + id
             }).done(function(game)
             {
-               /* $('#showOpenGames').attr('style','display: none;');
-                $("#showPlayers").removeAttr('style');*/
                 window.location.replace("game_lobby/" + game.id);
 
             });
@@ -85,8 +83,6 @@ $(document).ready(function()
                     url: "/playGame/" + id
                 }).done(function(data)
                 {
-                   /* $('#showOpenGames').attr('style','display: none;');
-                    $("#showPlayers").removeAttr('style');*/
                     window.location.replace("game/" + data.gameId + "/play");
 
                 });

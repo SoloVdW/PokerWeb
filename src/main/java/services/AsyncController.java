@@ -22,7 +22,7 @@ public class AsyncController {
 
     private volatile ConcurrentHashMap<Long, Instant> updateMap = new ConcurrentHashMap<>();
 
-    public void GameUpdated(long id) {
+    public void updatedGame(long id) {
         Instant instant = Instant.now();
         updateMap.put(id, instant);
     }
@@ -37,7 +37,7 @@ public class AsyncController {
 
         Optional<Game> game = gameRepositoryJPA.findGameById(id);
         if (game.isPresent())
-            return Results.json().render(game);
+            return Results.json().render(game.get());
         return Results.notFound();
     }
 }

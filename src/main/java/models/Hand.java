@@ -12,10 +12,6 @@ import java.util.List;
 @Entity
 public class Hand extends BaseEntityLongId{
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;*/
-
     @Enumerated(EnumType.STRING)
     private HandType handType;
 

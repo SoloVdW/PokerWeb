@@ -9,6 +9,7 @@ import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
+import services.AsyncController;
 import services.IPokerService;
 import services.MultiplayerService;
 
@@ -27,6 +28,9 @@ public class MultiplayerController {
     @Inject
     MultiplayerService multiplayerService;
 
+    @Inject
+    AsyncController asyncController;
+
     public Result index(Context context) {
         Result result = Results.html();
         String username = context.getSession().get(SecureFilter.USERNAME);
@@ -36,6 +40,7 @@ public class MultiplayerController {
             result.render("game", game.get())
                     .render(SecureFilter.USERNAME, username);
             context.getSession().put("gameId",game.get().getId().toString());
+            asyncController.updatedGame(game.get().getId());
         }
 
         return result;
@@ -46,6 +51,7 @@ public class MultiplayerController {
         if (game.isPresent()) {
             SimplePojo simplePojo = new SimplePojo();
             simplePojo.gameId = game.get().getId();
+            asyncController.updatedGame(game.get().getId());
             return Results.json().render(simplePojo);
         }
         return Results.notFound();
@@ -62,8 +68,10 @@ public class MultiplayerController {
     public Result joinGame(@PathParam("id") long id, Context context) {
         String username = context.getSession().get(SecureFilter.USERNAME);
         Optional<Game> game = multiplayerService.joinGame(id, username);
-        if (game.isPresent())
+        if (game.isPresent()) {
+            asyncController.updatedGame(game.get().getId());
             return Results.json().render(game.get());
+        }
 
         return Results.badRequest();
     }
@@ -83,6 +91,7 @@ public class MultiplayerController {
         if (game.isPresent()) {
             SimplePojo simplePojo= new SimplePojo();
             simplePojo.gameId= game.get().getId();
+            asyncController.updatedGame(game.get().getId());
             return Results.json().render(simplePojo);
         }
         return Results.notFound();
