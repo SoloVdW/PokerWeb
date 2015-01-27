@@ -1,5 +1,7 @@
 <div class="list-group" id="gameList">
-    <#list games as game>
-        <li id=${game.id} href="#" class="list-group-item">${game.id} : ${game.dateTime}</li>
-    </#list>
+    <#if games??>
+        <#list games as game>
+            <li id=${game.id} href="#" class="list-group-item">${game.id} : ${game.dateTime}</li>
+        </#list>
+    </#if>
 </div>

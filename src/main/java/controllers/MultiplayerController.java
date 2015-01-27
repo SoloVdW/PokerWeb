@@ -9,6 +9,7 @@ import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
+import ninja.session.Session;
 import services.IPokerService;
 import services.MultiplayerService;
 
@@ -30,15 +31,22 @@ public class MultiplayerController {
     @Inject
     AsyncController asyncController;
 
+    private static final String GAME="game";
+    private static final String GAMES="games";
+    private static final String GAME_ID="gameId";
+    private static final String HOSTING="hosting";
+
     public Result index(Context context) {
         Result result = Results.html();
         String username = context.getSession().get(SecureFilter.USERNAME);
 
         Optional<Game> game = multiplayerService.createMultiPlayerGame(username);
         if (game.isPresent()) {
-            result.render("game", game.get())
+            result.render(GAME, game.get())
                     .render(SecureFilter.USERNAME, username);
-            context.getSession().put("gameId",game.get().getId().toString());
+            Boolean hosting= true;
+            context.getSession().put(HOSTING,hosting.toString());
+            context.getSession().put(GAME_ID, game.get().getId().toString());
             asyncController.updatedGame(game.get().getId());
             asyncController.updatedGameList();
         }
@@ -49,7 +57,9 @@ public class MultiplayerController {
     public Result hostGame(@PathParam("id") long id, Context context) {
         Optional<Game> game = multiplayerService.createMultiPlayerGameFromOldGame(id,context.getSession().get(SecureFilter.USERNAME));
         if (game.isPresent()) {
-            context.getSession().put("gameId",game.get().getId().toString());
+            Boolean hosting= true;
+            context.getSession().put(HOSTING,hosting.toString());
+            context.getSession().put(GAME_ID,game.get().getId().toString());
 
             SimplePojo simplePojo = new SimplePojo();
             simplePojo.gameId = game.get().getId();
@@ -64,7 +74,7 @@ public class MultiplayerController {
     public Result showGames(Context context) {
         Optional<List<Game>> games = multiplayerService.getOpenGames();
         if (games.isPresent()) {
-            return Results.html().render("games", games.get());
+            return Results.html().render(GAMES, games.get());
         }
         return Results.html();
     }
@@ -73,6 +83,16 @@ public class MultiplayerController {
         String username = context.getSession().get(SecureFilter.USERNAME);
         Optional<Game> game = multiplayerService.joinGame(id, username);
         if (game.isPresent()) {
+            String strHosting= context.getSession().get(HOSTING);
+            if (strHosting!= null && !strHosting.isEmpty() && Boolean.valueOf(strHosting))
+            {
+                String gameId= context.getSession().get(GAME_ID);
+                long gId=Long.parseLong(gameId);
+                if (gId!= id)
+                {
+                    context.getSession().put(HOSTING, Boolean.FALSE.toString());
+                }
+            }
             asyncController.updatedGame(game.get().getId());
             return Results.json().render(game.get());
         }
@@ -83,8 +103,11 @@ public class MultiplayerController {
     public Result gameLobby(@PathParam("id") long id, Context context) {
         Optional<Game> game = multiplayerService.getGame(id);
         if (game.isPresent()) {
-            context.getSession().put("gameId",game.get().getId().toString());
-            return Results.html().render(game.get());
+            Session session= context.getSession();
+            session.put(GAME_ID, game.get().getId().toString());
+            String strHosting= session.get(HOSTING);
+
+            return Results.html().render(GAME,game.get()).render(HOSTING,strHosting);
         }
 
         return Results.notFound();
@@ -93,8 +116,9 @@ public class MultiplayerController {
     public Result playGame(@PathParam("id") long id, Context context) {
         Optional<Game> game = multiplayerService.playGame(id, context.getSession().get(SecureFilter.USERNAME));
         if (game.isPresent()) {
+            context.getSession().put(HOSTING, Boolean.FALSE.toString());
             SimplePojo simplePojo= new SimplePojo();
-            simplePojo.gameId= game.get().getId();
+            simplePojo.gameId = game.get().getId();
             asyncController.updatedGame(game.get().getId());
             return Results.json().render(simplePojo);
         }
@@ -104,7 +128,7 @@ public class MultiplayerController {
     public Result showGame(@PathParam("id") long id, Context context) {
         Optional<Game> game = multiplayerService.getGame(id);
         if (game.isPresent())
-            return Results.html().render(game.get());
+            return Results.html().render(GAME,game.get());
 
         return Results.notFound();
     }
