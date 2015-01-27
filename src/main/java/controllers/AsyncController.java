@@ -27,7 +27,7 @@ public class AsyncController {
     private volatile ConcurrentHashMap<Long, Instant> updateMap = new ConcurrentHashMap<>();
     private volatile Instant updateGameList;
 
-    public void updatedGame(long id) {
+    public synchronized void updatedGame(long id) {
         Instant instant = Instant.now();
         updateMap.put(id, instant);
     }
